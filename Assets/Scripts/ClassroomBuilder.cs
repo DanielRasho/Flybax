@@ -8,14 +8,14 @@ public class ClassroomBuilder : MonoBehaviour
 {
     // ── Room dimensions ──────────────────────────────────────────────
     [Header("Room Size")]
-    public float roomWidth  = 12f;
+    public float roomWidth = 12f;
     public float roomLength = 16f;
-    public float roomHeight =  4f;
+    public float roomHeight = 4f;
 
     // ── Desk grid ────────────────────────────────────────────────────
     [Header("Desk Layout")]
-    public int   deskColumns  = 5;
-    public int   deskRows     = 6;          // 30 desks total
+    public int deskColumns = 5;
+    public int deskRows = 6;          // 30 desks total
     public float deskSpacingX = 1.8f;
     public float deskSpacingZ = 2.2f;
 
@@ -23,6 +23,10 @@ public class ClassroomBuilder : MonoBehaviour
     [Header("Player Position")]
     public int playerCol = 4;              // rightmost column, back row
     public int playerRow = 5;
+
+    // ── Prefabs ───────────────────────────────────────────────────────
+    [Header("Prefabs")]
+    public GameObject studentPrefab;   // arrastra Assets/Prefabs/Student aquí
 
     // ── Materials (auto-created if null) ─────────────────────────────
     private Material matFloor, matWall, matCeiling;
@@ -44,15 +48,15 @@ public class ClassroomBuilder : MonoBehaviour
     // ─────────────────────────────────────────────────────────────────
     void CreateMaterials()
     {
-        matFloor        = MakeMat(new Color(0.55f, 0.42f, 0.30f));   // wood-ish
-        matWall         = MakeMat(new Color(0.92f, 0.90f, 0.85f));   // off-white
-        matCeiling      = MakeMat(new Color(0.97f, 0.97f, 0.95f));   // near-white
-        matDesk         = MakeMat(new Color(0.70f, 0.55f, 0.35f));   // light wood
-        matChair         = MakeMat(new Color(0.20f, 0.30f, 0.55f));  // dark blue
-        matStudent      = MakeMat(new Color(0.30f, 0.55f, 0.30f));   // green uniform
-        matPlayer       = MakeMat(new Color(0.95f, 0.80f, 0.20f));   // yellow = YOU
-        matTeacher      = MakeMat(new Color(0.75f, 0.20f, 0.20f));   // red = teacher
-        matBoard        = MakeMat(new Color(0.25f, 0.20f, 0.15f));   // dark frame
+        matFloor = MakeMat(new Color(0.55f, 0.42f, 0.30f));   // wood-ish
+        matWall = MakeMat(new Color(0.92f, 0.90f, 0.85f));   // off-white
+        matCeiling = MakeMat(new Color(0.97f, 0.97f, 0.95f));   // near-white
+        matDesk = MakeMat(new Color(0.70f, 0.55f, 0.35f));   // light wood
+        matChair = MakeMat(new Color(0.20f, 0.30f, 0.55f));  // dark blue
+        matStudent = MakeMat(new Color(0.30f, 0.55f, 0.30f));   // green uniform
+        matPlayer = MakeMat(new Color(0.95f, 0.80f, 0.20f));   // yellow = YOU
+        matTeacher = MakeMat(new Color(0.75f, 0.20f, 0.20f));   // red = teacher
+        matBoard = MakeMat(new Color(0.25f, 0.20f, 0.15f));   // dark frame
         matBoardSurface = MakeMat(new Color(0.08f, 0.30f, 0.15f));   // chalkboard green
     }
 
@@ -73,7 +77,7 @@ public class ClassroomBuilder : MonoBehaviour
         float h = roomHeight;
 
         // Floor
-        CreateBox("Floor",   new Vector3(0, 0, 0),
+        CreateBox("Floor", new Vector3(0, 0, 0),
                   new Vector3(w, 0.1f, l), matFloor);
 
         // Ceiling
@@ -81,19 +85,19 @@ public class ClassroomBuilder : MonoBehaviour
                   new Vector3(w, 0.1f, l), matCeiling);
 
         // Front wall (blackboard side)
-        CreateBox("Wall_Front", new Vector3(0, h/2, l/2),
+        CreateBox("Wall_Front", new Vector3(0, h / 2, l / 2),
                   new Vector3(w, h, 0.2f), matWall);
 
         // Back wall
-        CreateBox("Wall_Back",  new Vector3(0, h/2, -l/2),
+        CreateBox("Wall_Back", new Vector3(0, h / 2, -l / 2),
                   new Vector3(w, h, 0.2f), matWall);
 
         // Left wall
-        CreateBox("Wall_Left",  new Vector3(-w/2, h/2, 0),
+        CreateBox("Wall_Left", new Vector3(-w / 2, h / 2, 0),
                   new Vector3(0.2f, h, l), matWall);
 
         // Right wall
-        CreateBox("Wall_Right", new Vector3(w/2, h/2, 0),
+        CreateBox("Wall_Right", new Vector3(w / 2, h / 2, 0),
                   new Vector3(0.2f, h, l), matWall);
     }
 
@@ -105,7 +109,7 @@ public class ClassroomBuilder : MonoBehaviour
         float frontZ = roomLength / 2 - 0.12f;
 
         // Frame
-        CreateBox("Board_Frame",   new Vector3(0, 2.0f, frontZ),
+        CreateBox("Board_Frame", new Vector3(0, 2.0f, frontZ),
                   new Vector3(6f, 1.8f, 0.05f), matBoard);
 
         // Chalkboard surface
@@ -113,7 +117,7 @@ public class ClassroomBuilder : MonoBehaviour
                   new Vector3(5.6f, 1.4f, 0.05f), matBoardSurface);
 
         // Chalk tray
-        CreateBox("Board_Tray",    new Vector3(0, 1.20f, frontZ - 0.05f),
+        CreateBox("Board_Tray", new Vector3(0, 1.20f, frontZ - 0.05f),
                   new Vector3(5.6f, 0.08f, 0.12f), matBoard);
     }
 
@@ -181,21 +185,34 @@ public class ClassroomBuilder : MonoBehaviour
         foreach (var cl in cLegs)
             CreateBox($"CLeg_{id}", cl, new Vector3(0.04f, 0.48f, 0.04f), matChair);
 
-        // ── Student (capsule = body) ──────────────────────────────────
+        // ── Student (Prefab) ──────────────────────────────────────────
         if (!isPlayer)
         {
-            var student = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-            student.name = $"Student_{id}";
-            student.transform.position = new Vector3(x, 1.30f, chairZ);
-            student.transform.localScale = new Vector3(0.35f, 0.45f, 0.35f);
-            student.GetComponent<Renderer>().material = matStudent;
+            if (studentPrefab != null)
+            {
+                var student = Instantiate(studentPrefab);
+                student.name = $"Student_{id}";
+                student.transform.position = new Vector3(x, 1.30f, chairZ);
+                // Aplicar color verde al body (primer renderer del prefab)
+                var renderers = student.GetComponentsInChildren<Renderer>();
+                foreach (var r in renderers)
+                    r.material = matStudent;
+            }
+            else
+            {
+                // Fallback si no hay prefab asignado
+                var student = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                student.name = $"Student_{id}";
+                student.transform.position = new Vector3(x, 1.30f, chairZ);
+                student.transform.localScale = new Vector3(0.35f, 0.45f, 0.35f);
+                student.GetComponent<Renderer>().material = matStudent;
 
-            // Head (small sphere)
-            var head = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            head.name = $"Head_{id}";
-            head.transform.position = new Vector3(x, 1.85f, chairZ);
-            head.transform.localScale = Vector3.one * 0.22f;
-            head.GetComponent<Renderer>().material = matStudent;
+                var head = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                head.name = $"Head_{id}";
+                head.transform.position = new Vector3(x, 1.85f, chairZ);
+                head.transform.localScale = Vector3.one * 0.22f;
+                head.GetComponent<Renderer>().material = matStudent;
+            }
         }
         else
         {
