@@ -22,14 +22,14 @@ public class FPSCamera : MonoBehaviour
 
     void Start()
     {
-        SnapToPlayerSeat();
+        SnapToPlayer();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible   = false;
     }
 
-    void SnapToPlayerSeat()
+    void SnapToPlayer()
     {
-        GameObject seat = GameObject.FindWithTag("PlayerSeat");
+        GameObject seat = GameObject.FindWithTag("Player");
 
         if (seat != null)
         {
