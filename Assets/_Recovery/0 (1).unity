@@ -330,26 +330,21 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 611addb1ccc0a9b4c92366d5fc8ba1b8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TeacherBehaviour
-  ball: {fileID: 1740382427}
-  waypoints:
-  - {fileID: 667904079}
-  - {fileID: 127641752}
-  - {fileID: 1420815312}
-  - {fileID: 732609156}
-  - {fileID: 651220111}
-  - {fileID: 1448126196}
-  - {fileID: 793380360}
-  - {fileID: 1134157275}
+  m_EditorClassIdentifier: '::'
+  objective: {fileID: 0}
+  waypoints: []
   waitTime: 3
   patrolSpeed: 1.5
-  chaseSpeed: 2
+  chaseSpeed: 3
   viewRadius: 10
-  viewAngle: 120
+  viewAngle: 180
+  rememberTime: 1.25
   eyeHeight: 1.5
-  obstacleMask:
+  targetMask:
     serializedVersion: 2
     m_Bits: 0
+  attackDistance: 1.6
+  loseDistance: 20
 --- !u!1 &127641751
 GameObject:
   m_ObjectHideFlags: 0
@@ -3465,7 +3460,7 @@ GameObject:
   - component: {fileID: 1740382431}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Ball
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4804,7 +4799,6 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 1025902286}
   - {fileID: 1787729603}
-  - {fileID: 2146558000}
   - {fileID: 1155566377}
   - {fileID: 115322709}
   - {fileID: 1898642087}
@@ -4812,5 +4806,6 @@ SceneRoots:
   - {fileID: 1616754809}
   - {fileID: 145268577}
   - {fileID: 1588163866}
-  - {fileID: 2065058667}
   - {fileID: 1740382427}
+  - {fileID: 2065058667}
+  - {fileID: 2146558000}
