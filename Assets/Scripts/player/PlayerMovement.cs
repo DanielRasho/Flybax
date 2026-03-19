@@ -7,10 +7,10 @@ public class playerMovement : MonoBehaviour
 
     [SerializeField] private StudentController spawnPoint;
     
-    void Awake()
+    void Start()
     {
-        gameObject.transform.position = spawnPoint.VisionPoint.transform.position;
-        gameObject.transform.rotation = spawnPoint.VisionPoint.transform.rotation;
+        transform.position = spawnPoint.VisionPoint.position;
+        transform.rotation = spawnPoint.VisionPoint.rotation;
     }
 
     // Update is called once per frame
