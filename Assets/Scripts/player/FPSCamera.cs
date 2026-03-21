@@ -1,46 +1,52 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/// <summary>
-/// Attach to the Main Camera.
-/// Automatically positions it at the player's desk with mouse-look (FPS style).
-/// No movement — the player is seated.
-/// </summary>
 public class FPSCamera : MonoBehaviour
 {
     [Header("Mouse Look")]
     public float mouseSensitivity = 8f;
 
     [Header("Vertical Clamp (degrees)")]
-    public float minPitch = -30f;
-    public float maxPitch =  60f;
+    [SerializeField] private float minPitch = -30f;
+    [SerializeField] private float maxPitch =  70f;
+
+    [Header("Picked items")] 
+    [SerializeField] private Transform pickedItemPosition;
+    public Transform PickedItemPosition => pickedItemPosition;
 
     private const float EYE_HEIGHT = 0.85f;
 
-    private float pitch = 0f;
-    private float yaw   = 180f;   // empieza mirando hacia la pizarra
+    private float pitch;
+    private float yaw;
 
     void Start()
     {
         SnapToPlayer();
+
+        // ✅ Seed pitch/yaw from whatever rotation the camera already has
+        // instead of hardcoded defaults — this preserves your editor state.
+        pitch = transform.eulerAngles.x;
+        yaw   = transform.eulerAngles.y;
+
+        // eulerAngles returns 0–360, but pitch needs to be in the -180–180
+        // range so clamping works correctly (e.g. 330° → -30°)
+        if (pitch > 180f) pitch -= 360f;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible   = false;
     }
 
     void SnapToPlayer()
     {
-        GameObject seat = GameObject.FindWithTag("Player");
-
+        GameObject seat = transform.parent.gameObject;
         if (seat != null)
         {
             Vector3 eyePos = seat.transform.position + Vector3.up * EYE_HEIGHT;
             transform.position = eyePos;
-            transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
         }
         else
         {
-            Debug.LogWarning("FPSCamera: 'PlayerSeat' tag not found. " +
-                             "Make sure ClassroomBuilder has run first.");
+            Debug.LogWarning("FPSCamera: Parent seat not found.");
         }
     }
 
@@ -50,14 +56,12 @@ public class FPSCamera : MonoBehaviour
 
         Vector2 mouseDelta = Mouse.current.delta.ReadValue();
 
-        // Multiplicar por Time.deltaTime para normalizar los píxeles brutos
         yaw   += mouseDelta.x * mouseSensitivity * Time.deltaTime;
         pitch -= mouseDelta.y * mouseSensitivity * Time.deltaTime;
         pitch  = Mathf.Clamp(pitch, minPitch, maxPitch);
 
         transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
 
-        // Escape para soltar el cursor
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             Cursor.lockState = CursorLockMode.None;

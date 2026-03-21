@@ -6,15 +6,16 @@ TagManager:
   tags:
   - PlayerSeat
   - Ball
+  - CinemachineTarget
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Floor
+  - Walls
   - Water
   - UI
-  - 
-  - 
+  - Danger
+  - Checkpoints
   - 
   - 
   - 
