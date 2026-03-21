@@ -53,7 +53,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "IncreaseSpeed",
+                    "action": "DecreaseSpeed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -64,7 +64,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "DecreaseSpeed",
+                    "action": "IncreaseSpeed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
