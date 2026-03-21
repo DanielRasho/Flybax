@@ -32,12 +32,14 @@ public class playerMovement : MonoBehaviour
         _trajectoryDrawer = GetComponent<TrajectoryDrawer>();
         SetNewSeat(spawnPoint);
         _speed = baseThrowVelocity;
-        ball.OnBallNewSeat += ChangePOV;
+        ball.OnBallNewSeat += ChangePov;
+        ball.OnBallHitDanger += KillPlayer;
     }
 
     private void OnDestroy()
     {
-        ball.OnBallNewSeat -= ChangePOV;
+        ball.OnBallNewSeat -= ChangePov;
+        ball.OnBallHitDanger -= KillPlayer;
     }
 
     void FixedUpdate()
@@ -57,7 +59,7 @@ public class playerMovement : MonoBehaviour
         _isBallThrown = true;
     }
 
-    private void ChangePOV(Collider other)
+    private void ChangePov(Collider other)
     {
         StudentController student = other.GetComponent<StudentController>();
         if (student == null)
@@ -68,6 +70,15 @@ public class playerMovement : MonoBehaviour
         SetNewSeat(student);
         _isBallThrown = false;
         ball.Pick(povCamera.PickedItemPosition, povCamera.transform);
+        if (student.IsDestinyStudent)
+        {
+            OnPlayerOnGoal?.Invoke();
+        }
+    }
+
+    private void KillPlayer(Collider other)
+    {
+        OnPlayerHitDanger?.Invoke();
     }
 
     public void IncreaseSpeed(InputAction.CallbackContext context)
