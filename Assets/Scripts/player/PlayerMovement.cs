@@ -130,7 +130,7 @@ public class playerMovement : MonoBehaviour
 
     private void SetNewSeat(StudentController s)
     {
-        transform.position = spawnPoint.VisionPoint.position;
-        transform.rotation = spawnPoint.VisionPoint.rotation;
+        transform.position = s.VisionPoint.position;
+        transform.rotation = s.VisionPoint.rotation;
     }
 }
