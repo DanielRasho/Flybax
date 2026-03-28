@@ -16,6 +16,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject WinScreen; 
     [SerializeField] private GameObject LooseScreen; 
 
+    private bool _gameEnded = false;
+
     private void Awake() {
         if (Instance != null && Instance != this)
         {
@@ -30,25 +32,49 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1f;
         UpdateScores();
-        player.OnPlayerHitDanger += LooseGame;
-        player.OnPlayerOnGoal += WinGame;
+
+        if (player != null)
+        {
+            player.OnPlayerHitDanger += LooseGame;
+            player.OnPlayerOnGoal += WinGame;
+        }
     }
 
     private void OnDestroy()
     {
-        player.OnPlayerHitDanger -= LooseGame;
-        player.OnPlayerOnGoal -= WinGame;
+        if (player != null)
+        {
+            player.OnPlayerHitDanger -= LooseGame;
+            player.OnPlayerOnGoal -= WinGame;
+        }
     }
 
     void WinGame()
     {
+        if (_gameEnded) return;
+        _gameEnded = true;
+
         WinScreen.SetActive(true);
+
+        if (player != null)
+            player.enabled = false;
+
+        Time.timeScale = 0f;
     }
 
     void LooseGame()
     {
+        if (_gameEnded) return;
+        _gameEnded = true;
+
         LooseScreen.SetActive(true);
+
+        if (player != null)
+            player.enabled = false;
+
+        Time.timeScale = 0f;
     }
 
     void UpdateScores()
