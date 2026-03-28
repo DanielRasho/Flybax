@@ -51,7 +51,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5655207429343662155}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -153,7 +153,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75932833debe74d459bcf031175a06a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallController
-  ballPrefab: {fileID: 0}
-  maxPhysicsFrameIterations: 100
-  obstaclesParent: {fileID: 0}
-  lineRenderer: {fileID: 0}
