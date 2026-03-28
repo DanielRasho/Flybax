@@ -30,15 +30,18 @@ public class playerMovement : MonoBehaviour
     {
         _trajectoryDrawer = GetComponent<TrajectoryDrawer>();
         SetNewSeat(spawnPoint);
+        ball.Pick(povCamera.PickedItemPosition);
         _speed = baseThrowVelocity;
         ball.OnBallNewSeat += ChangePov;
         ball.OnBallHitDanger += KillPlayer;
+        ball.OnBallReturned += HandleBallReturned;
     }
 
     private void OnDestroy()
     {
         ball.OnBallNewSeat -= ChangePov;
         ball.OnBallHitDanger -= KillPlayer;
+        ball.OnBallReturned -= HandleBallReturned;
     }
 
     void FixedUpdate()
@@ -54,7 +57,7 @@ public class playerMovement : MonoBehaviour
         if (_isBallThrown) return;
         
         if (!context.canceled) return;
-        ball.Throw(povCamera.transform.forward, _speed, transform);
+        ball.Throw(povCamera.transform.forward, _speed);
         _isBallThrown = true;
     }
 
@@ -68,7 +71,7 @@ public class playerMovement : MonoBehaviour
         } 
         SetNewSeat(student);
         _isBallThrown = false;
-        ball.Pick(povCamera.PickedItemPosition, povCamera.transform);
+        ball.Pick(povCamera.PickedItemPosition);
         if (student.IsDestinyStudent)
         {
             OnPlayerOnGoal?.Invoke();
@@ -142,5 +145,10 @@ public class playerMovement : MonoBehaviour
     {
         transform.position = s.VisionPoint.position;
         transform.rotation = s.VisionPoint.rotation;
+    }
+
+    private void HandleBallReturned()
+    {
+        _isBallThrown = false;
     }
 }

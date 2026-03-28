@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class BallController : MonoBehaviour
 {
     public event Action<Collider> OnBallNewSeat;
     public event Action<Collider> OnBallHitDanger;
 
+    public event Action OnBallReturned;
+
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip hitSound;
 
     private Transform _lastPickPosition;
-    private Transform _lastHolderParent;
     private bool _hasBeenThrown = false;
     
     private Rigidbody _rb;
@@ -54,13 +56,13 @@ public class BallController : MonoBehaviour
     {
         if (_isSimulated) return;
 
-        if (_hasBeenThrown && Input.GetKeyDown(KeyCode.R))
+        if (_hasBeenThrown && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
         {
             ReturnToLastHolder();
         }
     }
 
-    public void Throw(Vector3 direction, float speed, Transform parent)
+    public void Throw(Vector3 direction, float speed)
     {
         _rb.isKinematic = false;
         _rb.linearVelocity = direction * speed;
@@ -68,20 +70,19 @@ public class BallController : MonoBehaviour
         transform.SetParent(null);
     }
 
-    public void Pick(Transform pickPosition, Transform parent)
+    public void Pick(Transform pickPosition)
     {
-        // Debug.Log("Ball picked");
         _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
         _rb.isKinematic = true;
 
         _lastPickPosition = pickPosition;
-        _lastHolderParent = parent;
         _hasBeenThrown = false;
 
-        transform.SetParent(parent);
-        transform.position = pickPosition.position;
+        transform.SetParent(pickPosition);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (_isSimulated) return;
@@ -96,16 +97,18 @@ public class BallController : MonoBehaviour
 
     private void ReturnToLastHolder()
     {
-        if (_lastPickPosition == null || _lastHolderParent == null) return;
+        // Debug.Log("ReturnToLastHolder llamado");
 
-        _rb.linearVelocity = Vector3.zero;
-        _rb.angularVelocity = Vector3.zero;
-        _rb.isKinematic = true;
+        // if (_lastPickPosition == null)
+        // {
+        //     Debug.LogWarning("No hay referencia guardada para devolver la pelota.");
+        //     return;
+        // }
 
-        transform.SetParent(_lastHolderParent);
-        transform.position = _lastPickPosition.position;
+        if (_lastPickPosition == null) return;
 
-        _hasBeenThrown = false;
+        Pick(_lastPickPosition);
+        OnBallReturned?.Invoke();
     }
 
     private void OnCollisionEnter(Collision collision)

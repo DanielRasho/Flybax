@@ -22,7 +22,7 @@ public class TrajectoryDrawer : MonoBehaviour {
     
     public void SimulateTrajectory(Vector3 position, Vector3 direction, float speed) {
         var ghostObj = Instantiate(ballPrefab, position, Quaternion.identity);
-        ghostObj.Throw(direction, speed, null);
+        ghostObj.Throw(direction, speed);
         SceneManager.MoveGameObjectToScene(ghostObj.gameObject, _simulationScene);
         // Vector3 velocity = direction * speed;
         // ghostObj.Init(velocity, true);
