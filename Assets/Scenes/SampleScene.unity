@@ -5456,6 +5456,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.009706974
       objectReference: {fileID: 0}
+    - target: {fileID: 3798411588395267329, guid: 7a164b6948bfe7d4499aeb96f0d418bf, type: 3}
+      propertyPath: m_Speed
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4688450686264474321, guid: 7a164b6948bfe7d4499aeb96f0d418bf, type: 3}
       propertyPath: ball
       value: 
