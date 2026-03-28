@@ -2808,7 +2808,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5509711480125570654, guid: eb653cce76050f74695fa817b12478f5, type: 3}
       propertyPath: m_Name
-      value: finalStudent
+      value: friend
       objectReference: {fileID: 0}
     - target: {fileID: 6229691935483879340, guid: eb653cce76050f74695fa817b12478f5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2850,6 +2850,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6856898668252654710, guid: eb653cce76050f74695fa817b12478f5, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 67b325b1506b12e44837a81016a5153b, type: 2}
     - target: {fileID: 7493943477843474959, guid: eb653cce76050f74695fa817b12478f5, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -2858,6 +2862,10 @@ PrefabInstance:
       propertyPath: isDestinyStudent
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7695814851164771299, guid: eb653cce76050f74695fa817b12478f5, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 67b325b1506b12e44837a81016a5153b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5440,6 +5448,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 311889992940019005, guid: 7a164b6948bfe7d4499aeb96f0d418bf, type: 3}
+      propertyPath: m_Size.y
+      value: 2.0257459
+      objectReference: {fileID: 0}
+    - target: {fileID: 311889992940019005, guid: 7a164b6948bfe7d4499aeb96f0d418bf, type: 3}
+      propertyPath: m_Center.y
+      value: 0.009706974
+      objectReference: {fileID: 0}
     - target: {fileID: 4688450686264474321, guid: 7a164b6948bfe7d4499aeb96f0d418bf, type: 3}
       propertyPath: ball
       value: 
@@ -5482,7 +5498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5375518930608336597, guid: 7a164b6948bfe7d4499aeb96f0d418bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 5375518930608336597, guid: 7a164b6948bfe7d4499aeb96f0d418bf, type: 3}
       propertyPath: m_LocalPosition.z
