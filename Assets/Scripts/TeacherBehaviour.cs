@@ -26,6 +26,9 @@ public class TeacherBehaviour : MonoBehaviour
     [Header("Raycast")]
     [SerializeField] private LayerMask obstacleMask;
 
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+
     private int wpIndex = 0;
     private EnemyState currentState = EnemyState.Patrol;
     private Coroutine patrolCoroutine;
@@ -35,6 +38,12 @@ public class TeacherBehaviour : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponentInChildren<Animator>(true);
+
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
+
+        // agent.updateRotation = true;
     }
 
     private void Start()
@@ -46,6 +55,8 @@ public class TeacherBehaviour : MonoBehaviour
 
         wpIndex = Random.Range(0, waypoints.Count);
         agent.SetDestination(waypoints[wpIndex].position);
+
+        UpdateAnimations();
     }
 
     private void Update()
@@ -62,6 +73,8 @@ public class TeacherBehaviour : MonoBehaviour
                 ChaseBall();
                 break;
         }
+
+        UpdateAnimations();
     }
 
     private void Patrol()
@@ -128,7 +141,14 @@ public class TeacherBehaviour : MonoBehaviour
         {
             gameOver = true;
             agent.isStopped = true;
-            Debug.Log("Se terminó el juego");
+
+            if (animator != null)
+            {
+                animator.SetBool("IsChasing", false);
+                animator.SetFloat("Speed", 0f);
+            }
+
+            Debug.Log("Se terminÃ³ el juego");
         }
     }
 
@@ -163,5 +183,13 @@ public class TeacherBehaviour : MonoBehaviour
         agent.SetDestination(waypoints[wpIndex].position);
 
         patrolCoroutine = null;
+    }
+
+    private void UpdateAnimations()
+    {
+        if (animator == null) return;
+
+        animator.SetBool("IsChasing", currentState == EnemyState.Chase);
+        animator.SetFloat("Speed", agent.velocity.magnitude);
     }
 }

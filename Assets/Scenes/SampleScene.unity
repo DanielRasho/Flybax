@@ -1101,6 +1101,33 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6229691935483879340, guid: eb653cce76050f74695fa817b12478f5, type: 3}
   m_PrefabInstance: {fileID: 342623945}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &362838301 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6134470498028636396, guid: 7a164b6948bfe7d4499aeb96f0d418bf, type: 3}
+  m_PrefabInstance: {fileID: 6719937504261590009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &362838303
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362838301}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cdad02ded7f6afd4aa1747a41183058f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &371517852
 GameObject:
   m_ObjectHideFlags: 0
@@ -3925,6 +3952,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75932833debe74d459bcf031175a06a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallController
+--- !u!82 &1740382437 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 9094703214152853826, guid: 50a8cce2c3db17e4195053c7483ad73d, type: 3}
+  m_PrefabInstance: {fileID: 2291346307815955339}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1750383782
 GameObject:
   m_ObjectHideFlags: 0
@@ -5376,9 +5408,17 @@ PrefabInstance:
       value: 0.6524372
       objectReference: {fileID: 0}
     - target: {fileID: 945827126447165968, guid: 50a8cce2c3db17e4195053c7483ad73d, type: 3}
+      propertyPath: hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 481c4ed929e964344b95c309e3d55913, type: 3}
+    - target: {fileID: 945827126447165968, guid: 50a8cce2c3db17e4195053c7483ad73d, type: 3}
       propertyPath: ballPrefab
       value: 
       objectReference: {fileID: 945827126447165968, guid: 50a8cce2c3db17e4195053c7483ad73d, type: 3}
+    - target: {fileID: 945827126447165968, guid: 50a8cce2c3db17e4195053c7483ad73d, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1740382437}
     - target: {fileID: 945827126447165968, guid: 50a8cce2c3db17e4195053c7483ad73d, type: 3}
       propertyPath: lineRenderer
       value: 
@@ -5465,6 +5505,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1740382427}
     - target: {fileID: 4688450686264474321, guid: 7a164b6948bfe7d4499aeb96f0d418bf, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 362838303}
+    - target: {fileID: 4688450686264474321, guid: 7a164b6948bfe7d4499aeb96f0d418bf, type: 3}
       propertyPath: 'waypoints.Array.data[0]'
       value: 
       objectReference: {fileID: 667904079}
@@ -5543,7 +5587,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6134470498028636396, guid: 7a164b6948bfe7d4499aeb96f0d418bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 362838303}
   m_SourcePrefab: {fileID: 100100000, guid: 7a164b6948bfe7d4499aeb96f0d418bf, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

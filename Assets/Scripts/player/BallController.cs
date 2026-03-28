@@ -8,6 +8,13 @@ public class BallController : MonoBehaviour
 {
     public event Action<Collider> OnBallNewSeat;
     public event Action<Collider> OnBallHitDanger;
+
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip hitSound;
+
+    private Transform _lastPickPosition;
+    private Transform _lastHolderParent;
+    private bool _hasBeenThrown = false;
     
     private Rigidbody _rb;
     // private bool _collidingWithCurrent = false;
@@ -28,6 +35,9 @@ public class BallController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         if (_rb == null) Debug.Log("WHAT IS NULL?!"); 
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -40,18 +50,34 @@ public class BallController : MonoBehaviour
         _checkpointsLayer = LayerMask.NameToLayer("Checkpoints");
     }
 
+    private void Update()
+    {
+        if (_isSimulated) return;
+
+        if (_hasBeenThrown && Input.GetKeyDown(KeyCode.R))
+        {
+            ReturnToLastHolder();
+        }
+    }
+
     public void Throw(Vector3 direction, float speed, Transform parent)
     {
         _rb.isKinematic = false;
         _rb.linearVelocity = direction * speed;
-        if (parent != null) transform.SetParent(parent);
+        _hasBeenThrown = true;
+        transform.SetParent(null);
     }
 
     public void Pick(Transform pickPosition, Transform parent)
     {
-        Debug.Log("Ball picked");
+        // Debug.Log("Ball picked");
         _rb.linearVelocity = Vector3.zero;
         _rb.isKinematic = true;
+
+        _lastPickPosition = pickPosition;
+        _lastHolderParent = parent;
+        _hasBeenThrown = false;
+
         transform.SetParent(parent);
         transform.position = pickPosition.position;
     }
@@ -65,6 +91,30 @@ public class BallController : MonoBehaviour
         } else if (other.gameObject.layer == _checkpointsLayer)
         {
             OnBallNewSeat?.Invoke(other);
+        }
+    }
+
+    private void ReturnToLastHolder()
+    {
+        if (_lastPickPosition == null || _lastHolderParent == null) return;
+
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
+        _rb.isKinematic = true;
+
+        transform.SetParent(_lastHolderParent);
+        transform.position = _lastPickPosition.position;
+
+        _hasBeenThrown = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (_isSimulated) return;
+
+        if (audioSource != null && hitSound != null)
+        {
+            audioSource.PlayOneShot(hitSound);
         }
     }
 
