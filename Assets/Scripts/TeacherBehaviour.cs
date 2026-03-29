@@ -15,8 +15,8 @@ public class TeacherBehaviour : MonoBehaviour
     [SerializeField] private float waitTime = 3.0f;
 
     [Header("Speeds")]
-    [SerializeField] private float patrolSpeed = 1.5f;
-    [SerializeField] private float chaseSpeed = 2f;
+    [SerializeField] private float patrolSpeed = 6f;
+    [SerializeField] private float chaseSpeed = 8f;
 
     [Header("Vision")]
     [SerializeField] private float viewRadius = 10.0f;
