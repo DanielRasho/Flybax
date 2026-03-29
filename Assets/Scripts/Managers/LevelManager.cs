@@ -12,7 +12,8 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private playerMovement player;
     [FormerlySerializedAs("BouncesScoreUI")] [SerializeField] private TMP_Text _bouncesScoreUI; 
-    [FormerlySerializedAs("StudentsScoreUI")] [SerializeField] private TMP_Text _studentsScoreUI; 
+    [FormerlySerializedAs("StudentsScoreUI")] [SerializeField] private TMP_Text _studentsScoreUI;
+    [SerializeField] AudioClip ambienceClip;
     [SerializeField] private GameObject WinScreen; 
     [SerializeField] private GameObject LooseScreen; 
 
@@ -32,6 +33,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        AudioManager.Instance.PlayAmbience(ambienceClip);
         Time.timeScale = 1f;
         UpdateScores();
 
