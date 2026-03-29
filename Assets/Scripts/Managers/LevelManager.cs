@@ -41,6 +41,8 @@ public class LevelManager : MonoBehaviour
         {
             player.OnPlayerHitDanger += LooseGame;
             player.OnPlayerOnGoal += WinGame;
+            player.OnPlayerHitNewStudent += IncreaseStudentCount;
+            player.OnBallBounce += IncreaseBounceCount;
         }
     }
 
@@ -50,6 +52,8 @@ public class LevelManager : MonoBehaviour
         {
             player.OnPlayerHitDanger -= LooseGame;
             player.OnPlayerOnGoal -= WinGame;
+            player.OnPlayerHitNewStudent -= IncreaseStudentCount;
+            player.OnBallBounce -= IncreaseBounceCount;
         }
     }
 
@@ -77,6 +81,18 @@ public class LevelManager : MonoBehaviour
             player.enabled = false;
 
         Time.timeScale = 0f;
+    }
+
+    void IncreaseStudentCount()
+    {
+        _totalStudents++;
+        UpdateScores();
+    }
+    
+    void IncreaseBounceCount()
+    {
+        _totalBounces++;
+        UpdateScores();
     }
 
     void UpdateScores()

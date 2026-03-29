@@ -8,6 +8,8 @@ public class playerMovement : MonoBehaviour
     
     public event Action OnPlayerHitDanger;
     public event Action OnPlayerOnGoal;
+    public event Action OnPlayerHitNewStudent;
+    public event Action OnBallBounce;
     
     [Header("General")]
     [SerializeField] private StudentController spawnPoint;
@@ -35,6 +37,7 @@ public class playerMovement : MonoBehaviour
         ball.OnBallNewSeat += ChangePov;
         ball.OnBallHitDanger += KillPlayer;
         ball.OnBallReturned += HandleBallReturned;
+        ball.OnBallBounced += BallBounced;
     }
 
     private void OnDestroy()
@@ -42,6 +45,7 @@ public class playerMovement : MonoBehaviour
         ball.OnBallNewSeat -= ChangePov;
         ball.OnBallHitDanger -= KillPlayer;
         ball.OnBallReturned -= HandleBallReturned;
+        ball.OnBallBounced -= BallBounced;
     }
 
     void FixedUpdate()
@@ -75,7 +79,14 @@ public class playerMovement : MonoBehaviour
         if (student.IsDestinyStudent)
         {
             OnPlayerOnGoal?.Invoke();
+        } else {
+            OnPlayerHitNewStudent?.Invoke();
         }
+    }
+
+    private void BallBounced()
+    {
+        OnBallBounce?.Invoke();
     }
 
     private void KillPlayer(Collider other)

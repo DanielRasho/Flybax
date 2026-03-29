@@ -9,6 +9,7 @@ public class BallController : MonoBehaviour
 {
     public event Action<Collider> OnBallNewSeat;
     public event Action<Collider> OnBallHitDanger;
+    public event Action OnBallBounced;
 
     public event Action OnBallReturned;
 
@@ -23,6 +24,7 @@ public class BallController : MonoBehaviour
     private int _dangerLayer = 0;
     private int _checkpointsLayer = 0;
     private bool _isSimulated;
+    private bool _isRolling;
     
     private Scene _simulationScene;
     private PhysicsScene _physicsScene;
@@ -115,10 +117,16 @@ public class BallController : MonoBehaviour
     {
         if (_isSimulated) return;
 
-        if (audioSource != null && hitSound != null)
+        if (audioSource != null && hitSound != null && !_isRolling)
         {
+            _isRolling = true;
             audioSource.PlayOneShot(hitSound);
+            OnBallBounced?.Invoke();
         }
     }
 
+    private void OnCollisionExit(Collision other)
+    {
+        _isRolling = false;
+    }
 }
