@@ -18,6 +18,9 @@ No installation required — play directly in your browser:
 
 **👉 [smaugthur.itch.io/flybax](https://smaugthur.itch.io/flybax)**
 
+## Video: 
+[Video](https://youtu.be/66nw4-1jGdk?si=JZ6Rxo1z9xKRk2i7)
+
 ---
 
 ## 🕹️ Usage / Controls
